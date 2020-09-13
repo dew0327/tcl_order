@@ -65,16 +65,21 @@ phases:
             labels:
               app: $_PROJECT_NAME
           spec:
-            #replicas: 3
-            maxReplicas: 5
-            minReplicas: 1
             scaleTargetRef:
               apiVersion: extensions/v1beta1
               kind: Deployment
               name: $_PROJECT_NAME
               namespace: tcl03
-            targetCPUUtilizationPercentage: 30
-            
+            #replicas: 3
+            maxReplicas: 5
+            minReplicas: 1
+            metrics:
+            - type: Resource
+              resource:
+                name: cpu
+                target:
+                  type: Utilization
+                  averageUtilization: 50
             selector:
               matchLabels:
                 app: $_PROJECT_NAME
