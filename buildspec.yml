@@ -65,7 +65,7 @@ phases:
             labels:
               app: $_PROJECT_NAME
           spec:
-            replicas: 1
+            #replicas: 1
             selector:
               matchLabels:
                 app: $_PROJECT_NAME
@@ -103,14 +103,14 @@ phases:
               kind: Deployment
               name: $_PROJECT_NAME
             minReplicas: 1
-            maxReplicas: 10
+            maxReplicas: 5
             metrics:
             - type: Resource
               resource:
                 name: cpu
                 target:
                   type: Utilization
-                  averageUtilization: 50
+                  averageUtilization: 10
           EOF
 cache:
   paths:
