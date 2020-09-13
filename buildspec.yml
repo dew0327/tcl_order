@@ -96,7 +96,6 @@ phases:
           kind: HorizontalPodAutoscaler
           metadata:
             name: skcchpa
-            namespace : tcl03
           spec:
             scaleTargetRef:
               apiVersion: apps/v1
