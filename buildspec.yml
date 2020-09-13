@@ -80,10 +80,10 @@ phases:
                     ports:
                       - containerPort: 8080
                     resources:
-                    #  limits:
-                    #    cpu: 0.5
+                      limits:
+                        cpu: 800m
                       requests:
-                        cpu: 100m
+                        cpu: 200m
                     readinessProbe:
                       tcpSocket:
                         port: 8080
@@ -108,7 +108,7 @@ phases:
               kind: Deployment
               name: $_PROJECT_NAME
             minReplicas: 1
-            maxReplicas: 10
+            maxReplicas: 3
             targetCPUUtilizationPercentage: 10
             #metrics:
             #- type: Resource
