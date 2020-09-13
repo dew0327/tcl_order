@@ -96,12 +96,12 @@ phases:
           kind: HorizontalPodAutoscaler
           metadata:
             name: skcchpa
+            namespace: tcl03
           spec:
             scaleTargetRef:
               apiVersion: apps/v1
               kind: Deployment
               name: $_PROJECT_NAME
-              namespace: tcl03
             minReplicas: 1
             maxReplicas: 10
             metrics:
