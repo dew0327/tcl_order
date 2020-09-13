@@ -81,7 +81,7 @@ phases:
                       - containerPort: 8080
                     resources:
                       limits:
-                        cpu: 800m
+                        cpu: "1"
                       requests:
                         cpu: 200m
                     readinessProbe:
