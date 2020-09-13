@@ -66,13 +66,15 @@ phases:
               app: $_PROJECT_NAME
           spec:
             #replicas: 3
-            minReplicas: 1
             maxReplicas: 5
+            minReplicas: 1
             scaleTargetRef:
               apiVersion: extensions/v1beta1
               kind: Deployment
               name: $_PROJECT_NAME
+              namespace: tcl03
             targetCPUUtilizationPercentage: 30
+            
             selector:
               matchLabels:
                 app: $_PROJECT_NAME
