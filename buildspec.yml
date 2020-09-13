@@ -81,9 +81,9 @@ phases:
                       - containerPort: 8080
                     resources:
                       limits:
-                        cpu: 500m
+                        cpu: 0.5
                       requests:
-                        cpu: 200m
+                        cpu: 0.1
                     readinessProbe:
                       tcpSocket:
                         port: 8080
