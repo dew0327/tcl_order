@@ -65,21 +65,7 @@ phases:
             labels:
               app: $_PROJECT_NAME
           spec:
-            scaleTargetRef:
-              apiVersion: extensions/v1beta1
-              kind: Deployment
-              name: $_PROJECT_NAME
-              namespace: tcl03
-            #replicas: 3
-            maxReplicas: 5
-            minReplicas: 1
-            metrics:
-            - type: Resource
-              resource:
-                name: cpu
-                target:
-                  type: Utilization
-                  averageUtilization: 50
+            replicas: 3
             selector:
               matchLabels:
                 app: $_PROJECT_NAME
@@ -104,6 +90,26 @@ phases:
                       initialDelaySeconds: 5
                       periodSeconds: 10
           EOF
+      - |
+          cat <<EOF | kubectl apply -f -
+          apiVersion: autoscaling/v2beta2
+          kind: HorizontalPodAutoscaler
+          metadata:
+            name: php-apache
+          spec:
+            scaleTargetRef:
+              apiVersion: apps/v1
+              kind: Deployment
+              name: php-apache
+            minReplicas: 1
+            maxReplicas: 10
+            metrics:
+            - type: Resource
+              resource:
+                name: cpu
+                target:
+                  type: Utilization
+                  averageUtilization: 50
 cache:
   paths:
     - '/root/.m2/**/*'
