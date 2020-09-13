@@ -65,7 +65,7 @@ phases:
             labels:
               app: $_PROJECT_NAME
           spec:
-            replicas: 3
+            replicas: 1
             selector:
               matchLabels:
                 app: $_PROJECT_NAME
@@ -80,10 +80,10 @@ phases:
                     ports:
                       - containerPort: 8080
                     resources:
-                      limits:
-                        cpu: 0.5
+                    #  limits:
+                    #    cpu: 0.5
                       requests:
-                        cpu: 0.1
+                        cpu: 100m
                     readinessProbe:
                       tcpSocket:
                         port: 8080
@@ -97,7 +97,7 @@ phases:
           EOF
       - |
           cat <<EOF | kubectl apply -f -
-          apiVersion: autoscaling/v2beta2
+          apiVersion: autoscaling/v1
           kind: HorizontalPodAutoscaler
           metadata:
             name: skcchpa
@@ -107,15 +107,16 @@ phases:
               apiVersion: apps/v1
               kind: Deployment
               name: $_PROJECT_NAME
-            minReplicas: 3
+            minReplicas: 1
             maxReplicas: 10
-            metrics:
-            - type: Resource
-              resource:
-                name: cpu
-                target:
-                  type: Utilization
-                  averageUtilization: 10
+            argetCPUUtilizationPercentage: 10
+            #metrics:
+            #- type: Resource
+            #  resource:
+            #    name: cpu
+            #    target:
+            #      type: Utilization
+            #      averageUtilization: 10
           EOF
 cache:
   paths:
