@@ -65,7 +65,7 @@ phases:
             labels:
               app: $_PROJECT_NAME
           spec:
-            replicas: 3
+            replicas: 1
             selector:
               matchLabels:
                 app: $_PROJECT_NAME
@@ -95,12 +95,14 @@ phases:
           apiVersion: autoscaling/v2beta2
           kind: HorizontalPodAutoscaler
           metadata:
-            name: php-apache
+            name: skcchpa
+            namespace : tcl03
           spec:
             scaleTargetRef:
               apiVersion: apps/v1
               kind: Deployment
-              name: php-apache
+              name: $_PROJECT_NAME
+              namespace: tcl03
             minReplicas: 1
             maxReplicas: 10
             metrics:
