@@ -77,6 +77,10 @@ phases:
                 containers:
                   - name: $_PROJECT_NAME
                     image: $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$_PROJECT_NAME:$CODEBUILD_RESOLVED_SOURCE_VERSION
+                    args:
+                      - /home/ubuntu
+                      - -c
+                      - touch /healthy; sleep 30; rm -rf /healthy; sleep 600
                     ports:
                       - containerPort: 8080
                     readinessProbe:
@@ -88,13 +92,12 @@ phases:
                       periodSeconds: 5
                       failureThreshold: 10
                     livenessProbe:
-                      httpGet:
-                        path: /actuator/health
-                        port: 8080
-                      initialDelaySeconds: 120
-                      timeoutSeconds: 2
+                      exec:
+                        command: 
+                          - cat
+                          - /healthy
+                      initialDelaySeconds: 10
                       periodSeconds: 5
-                      failureThreshold: 5
           EOF
 cache:
   paths:
