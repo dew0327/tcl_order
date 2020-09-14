@@ -66,6 +66,12 @@ phases:
               app: $_PROJECT_NAME
           spec:
             replicas: 3
+            minReadySeconds: 10
+            strategy:
+              type: RollingUpdate
+              rollingUpdate:
+                maxSurge: 5
+                maxUnavailable: 0
             selector:
               matchLabels:
                 app: $_PROJECT_NAME
@@ -108,7 +114,7 @@ phases:
               kind: Deployment
               name: $_PROJECT_NAME
             minReplicas: 3
-            maxReplicas: 5
+            maxReplicas: 6
             targetCPUUtilizationPercentage: 10
             #metrics:
             #- type: Resource
